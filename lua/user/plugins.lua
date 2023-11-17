@@ -1,110 +1,87 @@
-local fn = vim.fn
-
--- Automatically install packer
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-	PACKER_BOOTSTRAP = fn.system({
-		"git",
-		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
-	})
-	print("Installing packer close and reopen Neovim...")
-	vim.cmd([[packadd packer.nvim]])
-end
-
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]])
-
--- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-	return
-end
-
--- Have packer use a popup window
-packer.init({
-	display = {
-		open_fn = function()
-			return require("packer.util").float({ border = "rounded" })
-		end,
-	},
-})
-
--- Install your plugins here
-return packer.startup(function(use)
-  use { "wbthomason/packer.nvim" } -- Have packer manage itself
-  use { "nvim-lua/plenary.nvim" } -- Useful lua functions used by lots of plugins
-  use { "windwp/nvim-autopairs" } -- Autopairs, integrates with both cmp and treesitter
-  use { "numToStr/Comment.nvim" }
-  use { "JoosepAlviste/nvim-ts-context-commentstring" }
-  use { "kyazdani42/nvim-web-devicons" }
-  use { "kyazdani42/nvim-tree.lua" }
-  use { "akinsho/bufferline.nvim" }
-	use { "moll/vim-bbye" }
-  use { "nvim-lualine/lualine.nvim" }
-  use { "akinsho/toggleterm.nvim" }
-  use { "ahmedkhalf/project.nvim" }
-  use { "lewis6991/impatient.nvim" }
-  use { "lukas-reineke/indent-blankline.nvim" }
-  use { "goolord/alpha-nvim" }
-	use {"folke/which-key.nvim"}
-  use {
-        "ur4ltz/surround.nvim",
-        config = function()
-          require "surround".setup { mappings_style = "surround" }
-        end
-      }
-    -- Colorschemes
-  use { "folke/tokyonight.nvim" }
-  use { "lunarvim/darkplus.nvim" }
-
-	-- Cmp 
-  use { "hrsh7th/nvim-cmp" } -- The completion plugin
-  use { "hrsh7th/cmp-buffer" } -- buffer completions
-  use { "hrsh7th/cmp-path" } -- path completions
-	use { "saadparwaiz1/cmp_luasnip" } -- snippet completions
-	use { "hrsh7th/cmp-nvim-lsp" }
-	use { "hrsh7th/cmp-nvim-lua" }
-  use { "jalvesaq/Nvim-R" }
-	use { "jalvesaq/cmp-nvim-r" }
-
-	-- Snippets
-  use { "L3MON4D3/LuaSnip" } --snippet engine
-  use { "rafamadriz/friendly-snippets" } -- a bunch of snippets to use
-
-	-- LSP
-	use { "neovim/nvim-lspconfig" } -- enable LSP
-  use { "williamboman/mason.nvim"} -- simple to use language server installer
-  use { "williamboman/mason-lspconfig.nvim" }
-	use { "jose-elias-alvarez/null-ls.nvim" } -- for formatters and linters
-  use { "RRethy/vim-illuminate" }
-  use{ "onsails/lspkind-nvim" }
-  use({
-      "glepnir/lspsaga.nvim",
-      -- opt = true,
-      -- branch = "main",
-      -- event = "LspAttach",
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
   })
-	-- Telescope
-	use { "nvim-telescope/telescope.nvim" }
+end
+vim.opt.rtp:prepend(lazypath)
 
-	-- Treesitter
-	use {"nvim-treesitter/nvim-treesitter"}
 
-	-- Git
-	use { "lewis6991/gitsigns.nvim" }
+require("lazy").setup({
 
-	-- Automatically set up your configuration after cloning packer.nvim
--- 	-- Put this at the end after all plugins
- 	if PACKER_BOOTSTRAP then
- 		require("packer").sync()
- 	end
- end)
+  -- { "wbthomason/packer.nvim" }, -- Have packer manage itself
+  { "nvim-lua/plenary.nvim" }, -- ful lua functions d by lots of plugins
+  { "windwp/nvim-autopairs" }, -- Autopairs, integrates with both cmp and treesitter
+  { "numToStr/Comment.nvim" },
+  --  { "JoosepAlviste/nvim-ts-context-commentstring" },
+  { "kyazdani42/nvim-web-devicons" },
+  { "kyazdani42/nvim-tree.lua" },
+  { "akinsho/bufferline.nvim" },
+  { "moll/vim-bbye" },
+  { "nvim-lualine/lualine.nvim" },
+  { "akinsho/toggleterm.nvim" },
+  { "ahmedkhalf/project.nvim" },
+  { "lewis6991/impatient.nvim" },
+  { "lukas-reineke/indent-blankline.nvim",main="ibl",opts = {} },
+  { "goolord/alpha-nvim" },
+  {"folke/which-key.nvim"},
+  {
+      "ur4ltz/surround.nvim",
+      config = function()
+        require "surround".setup { mappings_style = "surround" }
+      end
+    },
+  -- Colorschemes
+  { "folke/tokyonight.nvim" },
+  { "lunarvim/darkplus.nvim" },
+
+  -- Cmp 
+  { "hrsh7th/nvim-cmp" }, -- The completion plugin
+  { "hrsh7th/cmp-buffer" }, -- buffer completions
+  { "hrsh7th/cmp-path" }, -- path completions
+  { "saadparwaiz1/cmp_luasnip" }, -- snippet completions
+  { "hrsh7th/cmp-nvim-lsp" },
+  { "hrsh7th/cmp-nvim-lua" },
+  { "jalvesaq/Nvim-R" },
+  { "jalvesaq/cmp-nvim-r" },
+
+  -- Snippets
+  { "L3MON4D3/LuaSnip" }, --snippet engine
+  { "rafamadriz/friendly-snippets" }, -- a bunch of snippets to 
+
+  -- LSP
+  { "neovim/nvim-lspconfig" }, -- enable LSP
+  { "williamboman/mason.nvim"}, -- simple to  language server installer
+  { "williamboman/mason-lspconfig.nvim" },
+  { "jose-elias-alvarez/null-ls.nvim" }, -- for formatters and linters
+  { "RRethy/vim-illuminate" },
+  { "onsails/lspkind-nvim" },
+  {
+    "glepnir/lspsaga.nvim",
+    -- opt = true,
+    -- branch = "main",
+    -- event = "LspAttach",
+  },
+  -- Telescope
+  { "nvim-telescope/telescope.nvim" },
+  {
+  "nvim-telescope/telescope-file-browser.nvim",
+  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  },
+
+  -- Treesitter
+  -- {"nvim-treesitter/nvim-treesitter"},
+  {
+    'nvim-treesitter/nvim-treesitter',
+    dependencies = {
+      'JoosepAlviste/nvim-ts-context-commentstring',
+    },
+  },
+  -- Git
+  { "lewis6991/gitsigns.nvim" },
+})
