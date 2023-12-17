@@ -14,7 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
 
-  -- { "wbthomason/packer.nvim" }, -- Have packer manage itself
+  { "wbthomason/packer.nvim" }, -- Have packer manage itself
   { "nvim-lua/plenary.nvim" }, -- ful lua functions d by lots of plugins
   { "windwp/nvim-autopairs" }, -- Autopairs, integrates with both cmp and treesitter
   { "numToStr/Comment.nvim" },
@@ -71,7 +71,7 @@ require("lazy").setup({
   { "nvim-telescope/telescope.nvim" },
   {
   "nvim-telescope/telescope-file-browser.nvim",
-  dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+  requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
   },
 
   -- Treesitter
@@ -84,20 +84,4 @@ require("lazy").setup({
   },
   -- Git
   { "lewis6991/gitsigns.nvim" },
-  -- lazy.nvim
-  {
-    "folke/noice.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- add any options here
-    },
-    dependencies = {
-      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
-      -- OPTIONAL:
-      --   `nvim-notify` is only needed, if you want to use the notification view.
-      --   If not available, we use `mini` as the fallback
-      "rcarriga/nvim-notify",
-      }
-  }
 })

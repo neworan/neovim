@@ -26,7 +26,6 @@ lua require "user.alpha"
 lua require "user.whichkey"
 lua require "user.autocommands"
 lua require "user.im-select"
-lua require "user.noice"
 " 自动保存
 " autocmd InsertLeave * :w
 " autocmd CursorHold,CursorHoldI * update

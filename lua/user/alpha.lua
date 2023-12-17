@@ -33,7 +33,7 @@ local function footer()
 	-- local fortune = handle:read("*a")
 	-- handle:close()
 	-- return fortune
-	return "iMac"
+	return "Mac Studio"
 end
 
 dashboard.section.footer.val = footer()
