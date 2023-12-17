@@ -19,6 +19,13 @@ vim.g.maplocalleader = " "
 --   command_mode = "c",
 
 -- Normal --
+
+
+-- Clear search with <esc>
+keymap( "i", "<esc>", "<cmd>noh<cr><esc>",opts)
+keymap( "n", "<esc>", "<cmd>noh<cr><esc>",opts)
+
+
 -- Better window navigation
 keymap("n", "<C-h>", "<C-w>h", opts)
 keymap("n", "<C-j>", "<C-w>j", opts)
@@ -36,8 +43,14 @@ keymap("n", "<S-l>", ":bnext<CR>", opts)
 keymap("n", "<S-h>", ":bprevious<CR>", opts)
 
 -- Move text up and down
-keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi<ESC>", opts)
-keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi<ESC>", opts)
+-- keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi<ESC>", opts)
+-- keymap("n", "<A-j>", "<Esc>:m .+1<CR>==gi<ESC>", opts)
+keymap("n", "<A-j>", "<cmd>m .+1<cr>==", opts)
+keymap("n", "<A-k>", "<cmd>m .-2<cr>==", opts)
+keymap("i", "<A-j>", "<esc><cmd>m .+1<cr>==gi", opts)
+keymap("i", "<A-k>", "<esc><cmd>m .-2<cr>==gi", opts)
+keymap("v", "<A-j>", ":m '>+1<cr>gv=gv", opts)
+keymap("v", "<A-k>", ":m '<-2<cr>gv=gv", opts)
 
 -- Insert --
 -- Press jk fast to exit insert mode
@@ -72,3 +85,31 @@ keymap("n", "<leader>v", "vap:ToggleTermSendVisualLines<cr>", opts)
 -- keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 -- keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
+-- windows
+keymap("n", "<leader>oo", "<C-W>w", opts) --other window
+keymap("n", "<leader>oc", "<C-W>c", opts) --Delete
+-- keymap("n", "<leader>w-", "<C-W>s", opts) -- split below
+-- keymap("n", "<leader>w|", "<C-W>v", opts) -- split right
+-- keymap("n", "<leader>-", "<C-W>s", opts) --split below
+-- keymap("n", "<leader>|", "<C-W>v", opts) -- split right
+
+-- tabs
+-- keymap("n", "<leader><tab>l", "<cmd>tablast<cr>", opts) -- last tab
+-- keymap("n", "<leader><tab>f", "<cmd>tabfirst<cr>", opts) -- first tab
+-- keymap("n", "<leader><tab><tab>", "<cmd>tabnew<cr>", opts) -- new tab
+-- keymap("n", "<leader><tab>]", "<cmd>tabnext<cr>", opts) -- next tab
+-- keymap("n", "<leader><tab>d", "<cmd>tabclose<cr>", opts) -- close tab
+-- keymap("n", "<leader><tab>[", "<cmd>tabprevious<cr>", opts) -- Previous tab
+
+vim.keymap.set('n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', {
+    desc = "Toggle Spectre"
+})
+vim.keymap.set('n', '<leader>rw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('v', '<leader>rw', '<esc><cmd>lua require("spectre").open_visual()<CR>', {
+    desc = "Search current word"
+})
+vim.keymap.set('n', '<leader>rp', '<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', {
+    desc = "Search on current file"
+})

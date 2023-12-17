@@ -84,9 +84,12 @@ local mappings = {
     "<cmd>lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown{previewer = false})<cr>",
     "Buffers",
   },
-  ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
+  -- ["e"] = { "<cmd>lua require('neo-tree.command').execute({ toggle = true, dir = require('lazyvim.util').root() })<cr>", "Explorer root" },
+  -- ["E"] = { "<cmd>Neotree .<cr>", "Explorer cwd" },
+  ["e"] = { "<cmd>Neotree toggle=true<cr>", "Explorer" },
+  -- ["E"] = { "<cmd>lua require('neo-tree.command').execute({ toggle = true, dir = vim.loop.cwd()})<cr>", "Explorer cwd" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
-  ["q"] = { "<cmd>q!<CR>", "Quit" },
+  ["q"] = { "<cmd>q<CR>", "Quit" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
   ["h"] = { "<cmd>nohlsearch<CR>", "No Highlight" },
   ["f"] = {
@@ -95,15 +98,17 @@ local mappings = {
   },
   ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
   ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
+  ["m"] = { "<cmd>lua require('noice').cmd('last')<cr>", "last message" },
+  ["y"] = { "<cmd>w<cr><cmd>!python %<cr>","execute python" },
 
-  p = {
-    name = "Packer",
-    c = { "<cmd>PackerCompile<cr>", "Compile" },
-    i = { "<cmd>PackerInstall<cr>", "Install" },
-    s = { "<cmd>PackerSync<cr>", "Sync" },
-    S = { "<cmd>PackerStatus<cr>", "Status" },
-    u = { "<cmd>PackerUpdate<cr>", "Update" },
-  },
+  -- p = {
+  --   name = "Packer",
+  --   c = { "<cmd>PackerCompile<cr>", "Compile" },
+  --   i = { "<cmd>PackerInstall<cr>", "Install" },
+  --   s = { "<cmd>PackerSync<cr>", "Sync" },
+  --   S = { "<cmd>PackerStatus<cr>", "Status" },
+  --   u = { "<cmd>PackerUpdate<cr>", "Update" },
+  -- },
 
   g = {
     name = "Git",
